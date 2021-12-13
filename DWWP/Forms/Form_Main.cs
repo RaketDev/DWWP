@@ -153,7 +153,7 @@ namespace DWWP
             /*
          * code here
          */
-
+            openCHildForm(new Form_Customer_Customer());
             hideSubMenu();
         }
 

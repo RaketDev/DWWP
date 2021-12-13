@@ -551,7 +551,6 @@ namespace DWWP
             this.MinimumSize = new System.Drawing.Size(1208, 530);
             this.Name = "Form_Main";
             this.Text = "Form1";
-            this.TopMost = true;
             this.panelSideMenu.ResumeLayout(false);
             this.panelItemSubmenu.ResumeLayout(false);
             this.panelCustomersSubmenu.ResumeLayout(false);

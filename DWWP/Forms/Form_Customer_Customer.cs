@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace DWWP
 {
-    public partial class Form_Options : Form
+    public partial class Form_Customer_Customer : Form
     {
-        public Form_Options()
+        public Form_Customer_Customer()
         {
             InitializeComponent();
+            CustomerCMD();
+        }
+
+        private void CustomerCMD()
+        {
+            MessageBox.Show(Program.Connection.exeCommand("select * from D_kunde"));
         }
     }
 }
