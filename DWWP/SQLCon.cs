@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace DWWP
 {
@@ -25,7 +26,7 @@ namespace DWWP
                 Connection.Open();
                 Connection.Close();
                 return true;
-               
+
             }
             catch (Exception e)
             {
@@ -33,30 +34,38 @@ namespace DWWP
                 return false;
             }
         }
-
-        public String exeCommand(String queryString)
+        /// <summary>
+        /// enters a query command into the SQL database and returns a string from a reader
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
+        public String exeCommandReader(String queryString)
         {
             String result = "";
             SqlCommand cmd = new SqlCommand(queryString, Connection);
 
             Connection.Open();
 
+
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                
 
-               while(reader.Read())
+
+                int lenght = 0;
+                while (reader.Read())
                 {
-                    String str = "";
-                    int i = 0;
-                    while (reader.NextResult())
-                    {
-                        str += reader.GetString(i);
-                        i++;
-                    }
-                   MessageBox.Show(str);
+                    lenght = reader.FieldCount;
+                    result += readSingleRow((IDataRecord)reader);
                 }
 
+                String header = "";
+
+                for (int i = 0; i < lenght; i++)
+                {
+                    header += reader.GetName(i) + ",";
+                }
+
+                result = header + "\n" + result;
 
             }
 
@@ -64,6 +73,38 @@ namespace DWWP
 
             return result;
 
+        }
+
+        private String readSingleRow(IDataRecord data)
+        {
+            String result = "";
+            for (int i = 0; i < data.FieldCount; i++)
+            {
+                result += data[i].ToString() + "|,|";
+            }
+            return result + "\n";
+        } 
+
+        /// <summary>
+        /// enters a query command into the SQL database and returns a DataTable from a Adapter
+        /// </summary>
+        /// <param name="queryString"></param>
+        /// <returns></returns>
+        public DataTable exeCommandTable(String queryString)
+        {
+            var result = new DataTable();
+
+
+            SqlCommand cmd = new SqlCommand(queryString, Connection);
+            Connection.Open();
+
+            using(SqlDataAdapter da = new SqlDataAdapter(cmd))
+            {
+                da.Fill(result);
+            }
+            Connection.Close();
+
+            return result;
         }
     }
 }

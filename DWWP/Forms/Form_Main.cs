@@ -162,7 +162,7 @@ namespace DWWP
             /*
          * code here
          */
-
+            openCHildForm(new Form_Customer_Delivery());
             hideSubMenu();
         }
 
@@ -171,7 +171,7 @@ namespace DWWP
             /*
          * code here
          */
-
+            openCHildForm(new Form_Customer_Partner());
             hideSubMenu();
         }
 

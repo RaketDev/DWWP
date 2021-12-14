@@ -31,8 +31,12 @@ namespace DWWP
                     sw.WriteLine("Username:");
                     sw.WriteLine("Password:");
                     sw.WriteLine("Connected:");
-                    sw.WriteLine("");
-                    sw.WriteLine("");
+                    sw.WriteLine("SQL:Customer");
+                    sw.WriteLine("CMD:");
+                    sw.WriteLine("AddressType:");
+                    sw.WriteLine("Customer:");
+                    sw.WriteLine("Delivery:");
+                    sw.WriteLine("Partner:");
                     sw.WriteLine("");
                     sw.WriteLine("");
 
@@ -41,7 +45,11 @@ namespace DWWP
             }
 
         }
-
+        /// <summary>
+        /// Methode to read from the Main Config file, enter an option string to define wich option you want
+        /// </summary>
+        /// <param name="option"></param>
+        /// <returns></returns>
         public static string readConfig(String option)
         {
             String rowdata = "";
@@ -78,17 +86,31 @@ namespace DWWP
 
                 case "Connection":
 
-                    int ic = 0;
-                    for (i = ic; i < data.Length; i++)
+                    int ic;
+                    for (ic = 0; ic < data.Length; ic++)
                     {
-                        if (data[i] == "SQL:SQL") break;
+                        if (data[ic] == "SQL:SQL") break;
                     }
 
-                    var str1 = data[ic + 8].Split(":");
+                    var str1 = data[ic + 7].Split(":");
 
                     result = str1[1];
 
+                    break;
 
+                case "SQLAddress":
+
+                    int customerIndex;
+                    for(customerIndex = 0; customerIndex < data.Length;customerIndex++)
+                    {
+                        if (data[customerIndex] == "SQL:Customer") break;
+                    } 
+
+                    for(int i5 = customerIndex;i5 < customerIndex + 6;i5++)
+                    {
+                        var str = data[i5].Split(":");
+                        result += str[1] + "|,|";
+                    }
                     break;
 
             }

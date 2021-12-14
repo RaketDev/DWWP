@@ -26,6 +26,13 @@ namespace DWWP
             //SQLWinAuth.Text = conndata[4];
             SQLUsername.Text = conndata[5];
             SQLPassword.Text = conndata[6];
+
+            String[] customerdata = Config.readConfig("SQLAddress").Split("|,|");
+            CustomerSQLCommand.Text = customerdata[1];
+            AddressType.Value = int.Parse(customerdata[2]);
+            AddressCustomer.Text = customerdata[3];
+            AddressDelivery.Text = customerdata[4];
+            AddressPartner.Text = customerdata[5];
         }
 
         private void SQLWinAuth_Click(object sender, EventArgs e)
@@ -49,13 +56,19 @@ namespace DWWP
                     "Username:" + SQLUsername.Text + "\n" +
                     "Password:" + SQLPassword.Text + "\n" +
                     "Connected:" + connection.ToString() + "\n" +
+                    "SQL:Customer" + "\n" +
+                    "CMD:" + CustomerSQLCommand.Text +"\n" +
+                    "AddressType:" + AddressType.Value +"\n" +
+                    "Customer:" +  AddressCustomer.Text  +"\n" +
+                    "Delivery:" + AddressDelivery.Text + "\n" +
+                    "Partner:" + AddressPartner.Text + "\n" +
                     "\n" +
                     "\n" +
                     "\n" +
                     ""; 
 
             Config.writeConfig(data);
-
+            Program.SQLConnectionTry();
 
 
         }
@@ -75,6 +88,11 @@ namespace DWWP
                 buttonCon.BackColor = Color.Red;
                 connection = false;
             }
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
